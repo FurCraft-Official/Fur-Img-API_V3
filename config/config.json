@@ -40,6 +40,7 @@
         "level": 4
     },
     "paths": {
+        "html": "./public",
         "images": "./tupian"
     },
     "admintoken": "114514"

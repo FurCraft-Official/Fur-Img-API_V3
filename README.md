@@ -70,6 +70,7 @@ npm install
     "level": 3                      // 日志级别（0-5）
   },
   "paths": {
+    "html": "./public",             // 静态网站文件目录
     "images": "./tupian"            // 图片/文件目录
   },
   "admintoken": "114514"            // 管理员 Token

@@ -1,0 +1,81 @@
+[2026-02-05 20:46:58] [info]   Logger initialized. 
+[2026-02-05 20:46:58] [info]   Database initialized at ./data/app.db 
+[2026-02-05 20:46:58] [info]   Database table "files" has been cleared. 
+[2026-02-05 20:46:58] [error]   Error scanning directory: Error: ENOENT: no such file or directory, opendir 'E:\api\tupian'  
+[2026-02-05 20:46:58] [info]   finished to scan ./tupian 
+[2026-02-05 20:46:58] [info]   http listen at http://localhost:3000 
+[2026-02-05 20:47:25] [info]   Logger initialized. 
+[2026-02-05 20:47:25] [info]   Database file found at ./data/app.db 
+[2026-02-05 20:47:25] [info]   Database table "files" has been cleared. 
+[2026-02-05 20:47:25] [error]   Error scanning directory: Error: ENOENT: no such file or directory, opendir 'E:\api\tupian'  
+[2026-02-05 20:47:25] [info]   finished to scan ./tupian 
+[2026-02-05 20:47:25] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:02:07] [info]   Logger initialized. 
+[2026-02-05 21:02:07] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:02:07] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:02:07] [error]   Error scanning directory: Error: ENOENT: no such file or directory, opendir 'E:\api\tupian'  
+[2026-02-05 21:02:07] [info]   finished to scan ./tupian 
+[2026-02-05 21:02:07] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:43:28] [info]   Logger initialized. 
+[2026-02-05 21:43:28] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:43:28] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:43:28] [error]   Error scanning directory: Error: ENOENT: no such file or directory, opendir 'E:\api\tupian'  
+[2026-02-05 21:43:28] [info]   finished to scan ./tupian 
+[2026-02-05 21:43:28] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:44:07] [info]   ::1 /api GET 404 8ms 26bytes 
+[2026-02-05 21:44:07] [info]   ::1 /favicon.ico GET 404 2ms 23bytes 
+[2026-02-05 21:44:13] [info]   ::1 / GET 404 1ms 23bytes 
+[2026-02-05 21:44:15] [info]   ::1 / GET 404 1ms 23bytes 
+[2026-02-05 21:45:22] [info]   ::1 /index.html GET 404 2ms 23bytes 
+[2026-02-05 21:46:32] [info]   ::1 /api GET 404 1ms 26bytes 
+[2026-02-05 21:46:33] [info]   ::1 /api GET 404 1ms 26bytes 
+[2026-02-05 21:46:39] [error]   get files failed SqliteError: incomplete input
+    at Database.prepare (E:\api\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at getAllFilelist (file:///E:/api/src/database/db.js:83:21)
+    at file:///E:/api/src/web/api.js:169:26
+    at Layer.handleRequest (E:\api\node_modules\router\lib\layer.js:152:17)
+    at next (E:\api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (E:\api\node_modules\router\lib\route.js:117:3)
+    at handle (E:\api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (E:\api\node_modules\router\lib\layer.js:152:17)
+    at E:\api\node_modules\router\index.js:295:15
+    at processParams (E:\api\node_modules\router\index.js:582:12)  
+[2026-02-05 21:46:39] [info]   ::1 /filelist GET 500 3ms 28bytes 
+[2026-02-05 21:46:44] [info]   ::1 /health GET 200 2ms 263bytes 
+[2026-02-05 21:47:56] [info]   Logger initialized. 
+[2026-02-05 21:47:56] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:47:56] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:47:56] [info]   finished to scan ./tupian 
+[2026-02-05 21:47:56] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:48:19] [info]   ::1 /health GET 200 6ms 270bytes 
+[2026-02-05 21:48:25] [info]   ::1 / GET 404 2ms 23bytes 
+[2026-02-05 21:48:31] [info]   ::1 /index.html GET 404 2ms 23bytes 
+[2026-02-05 21:48:45] [info]   Logger initialized. 
+[2026-02-05 21:48:45] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:48:45] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:48:45] [info]   finished to scan ./tupian 
+[2026-02-05 21:49:03] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:49:03] [info]   ::1 /api GET 200 36ms 2781184bytes 
+[2026-02-05 21:49:11] [info]   ::1 /api?json=true GET 200 3ms 131bytes 
+[2026-02-05 21:49:19] [info]   ::1 //files/AGC_20250118_063907524.jpg GET 404 1ms 23bytes 
+[2026-02-05 21:50:08] [info]   Logger initialized. 
+[2026-02-05 21:50:08] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:50:08] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:50:08] [info]   finished to scan ./tupian 
+[2026-02-05 21:50:14] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:50:17] [info]   ::1 //files/AGC_20250118_063907524.jpg GET 404 6ms 23bytes 
+[2026-02-05 21:50:21] [info]   ::1 /index.html GET 404 1ms 23bytes 
+[2026-02-05 21:50:22] [info]   ::1 /index.html GET 404 1ms 23bytes 
+[2026-02-05 21:50:24] [info]   ::1 /index.html GET 404 1ms 23bytes 
+[2026-02-05 21:50:24] [info]   ::1 /favicon.ico GET 404 2ms 23bytes 
+[2026-02-05 21:50:37] [info]   ::1 /index.html GET 404 1ms 23bytes 
+[2026-02-05 21:50:59] [info]   Logger initialized. 
+[2026-02-05 21:50:59] [info]   Database file found at ./data/app.db 
+[2026-02-05 21:50:59] [info]   Database table "files" has been cleared. 
+[2026-02-05 21:50:59] [info]   finished to scan ./tupian 
+[2026-02-05 21:50:59] [info]   http listen at http://localhost:3000 
+[2026-02-05 21:51:01] [info]   ::1 /index.html GET 200 8ms 234bytes 
+[2026-02-05 21:51:04] [info]   ::1 / GET 200 2ms 234bytes 
+[2026-02-05 21:51:44] [info]   ::1 / GET 304 2ms 0bytes 
+[2026-02-05 21:51:44] [info]   ::1 / GET 304 1ms 0bytes 
+[2026-02-05 21:51:47] [info]   ::1 / GET 304 1ms 0bytes 

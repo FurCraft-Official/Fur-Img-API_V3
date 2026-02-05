@@ -222,10 +222,6 @@ async function createRoute(db, config, app, express) {
             res.status(500).json({ error: 'refresh failed' });
         }
     });
-    app.use((req, res) => {
-        // 404处理
-        res.status(404).json({ message: 'Not Fount' });
-    });
 
     // 全局异常捕获 (Express 5)
     app.use((err, req, res, next) => {
@@ -235,7 +231,14 @@ async function createRoute(db, config, app, express) {
         }
     });
     // 挂载静态目录
-    app.use('/files', express.static(config.paths.images));
+    app.use('/', express.static(path.resolve(config.paths.html)));
+    app.use('/files', express.static(path.resolve(config.paths.images)));
+
+    app.use((req, res) => {
+        // 404处理
+        res.status(404).json({ message: 'Not Fount' });
+    });
+
     function getMimeType(filename) {
         const ext = path.extname(filename).toLowerCase();
         const mimeTypes = {
