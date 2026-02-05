@@ -10,7 +10,7 @@ async function initDatabase(config) {
         if (fs.existsSync(path.resolve(config.db.sqlite3.file))) {
             // 创建新数据库
             const db = new Database(config.db.sqlite3.file);
-            logger.info(`Database file found at ${config.db.sqlite3.file}`);
+            logger.info('Database file found at %s', config.db.sqlite3.file);
             return db;
         } else {
             // 读取数据库
@@ -23,11 +23,11 @@ async function initDatabase(config) {
             path TEXT,
             type TEXT
         );`).run();
-            logger.info(`Database initialized at ${dbFile}`);
+            logger.info('Database initialized at %s', dbFile);
             return db;
         }
     } catch (e) {
-        logger.error('Failed to initialize database:', e);
+        logger.error({ err: e }, 'Failed to initialize database');
     }
 }
 
@@ -80,7 +80,7 @@ function getRandomFromFolder(db, folderPath) {
     `).get(queryParam);
 }
 export function getAllFilelist(db) {
-    const stmt = db.prepare('SELECT file, path, type FROM ');
+    const stmt = db.prepare('SELECT file, path, type FROM files');
     return stmt.all();
 }
 
@@ -101,10 +101,10 @@ function clearDatabase(db) {
         });
 
         transaction();
-        logger.info('Database table "files" has been cleared.');
+        logger.info('Database table "files" has been cleared');
         return true;
     } catch (e) {
-        logger.error('Failed to clear database:', e);
+        logger.error({ err: e }, 'Failed to clear database');
         return false;
     }
 }

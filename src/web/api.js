@@ -78,14 +78,14 @@ async function createRoute(db, config, app, express) {
 
             // 错误处理
             fileStream.on('error', (err) => {
-                logger.error('Stream error:', err);
+                logger.error({ err }, 'Stream error');
                 if (!res.headersSent) {
                     res.status(500).json({ error: 'Stream failed' });
                 }
             });
 
         } catch (e) {
-            logger.error('API error:', e);
+            logger.error({ err: e }, 'API error');
             if (!res.headersSent) {
                 res.status(500).json({ error: 'Internal server error' });
             }
@@ -128,41 +128,48 @@ async function createRoute(db, config, app, express) {
 
             // 错误处理
             fileStream.on('error', (err) => {
-                logger.error('Stream error:', err);
+                logger.error({ err }, 'Stream error');
                 if (!res.headersSent) {
                     res.status(500).json({ error: 'Stream failed' });
                 }
             });
 
         } catch (err) {
-            logger.error('API folder error:', err);
+            logger.error({ err }, 'API folder error');
             if (!res.headersSent) {
                 res.status(500).json({ error: 'Internal server error' });
             }
         }
     });
     app.get('/health', (req, res) => {
-        const memoryUsage = process.memoryUsage();
-        const uptime = process.uptime() * 1000; // 转换为毫秒
-        const uptimeDuration = dayjs.duration(uptime);
+        try {
+            const memoryUsage = process.memoryUsage();
+            const uptime = process.uptime() * 1000; // 转换为毫秒
+            const uptimeDuration = dayjs.duration(uptime);
 
-        res.json({
-            status: 'ok',
-            memory: {
-                rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
-                heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
-                heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
-                external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`
-            },
-            platform: process.platform,
-            arch: process.arch,
-            nodeVersion: process.version,
-            uptime: {
-                ms: uptime,
-                formatted: `${Math.floor(uptimeDuration.asDays())}天 ${uptimeDuration.hours()}时 ${uptimeDuration.minutes()}分 ${uptimeDuration.seconds()}秒`
-            },
-            timestamp: dayjs().format('YYYY-MM-DD HH:mm:ss')
-        });
+            res.json({
+                status: 'ok',
+                memory: {
+                    rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
+                    heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
+                    heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
+                    external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`
+                },
+                platform: process.platform,
+                arch: process.arch,
+                nodeVersion: process.version,
+                uptime: {
+                    ms: uptime,
+                    formatted: `${Math.floor(uptimeDuration.asDays())}天 ${uptimeDuration.hours()}时 ${uptimeDuration.minutes()}分 ${uptimeDuration.seconds()}秒`
+                },
+                timestamp: dayjs().format('YYYY-MM-DD HH:mm:ss')
+            });
+        } catch (err) {
+            logger.error({ err }, 'Health check error');
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Health check failed' });
+            }
+        }
     });
     app.get('/filelist', (req, res) => {
         try {
@@ -204,7 +211,7 @@ async function createRoute(db, config, app, express) {
 
             res.json(result);
         } catch (e) {
-            logger.error('get files failed', e);
+            logger.error({ err: e }, 'Get files failed');
             res.status(500).json({ error: 'get files failed' });
         }
     }); app.post('/admin/refresh', authMiddleware, async (req, res) => {
@@ -216,16 +223,16 @@ async function createRoute(db, config, app, express) {
                 await saveToDatabase(db, item);
             });
             flush(db);
-            logger.info('refresh database finished');
+            logger.info('Refresh database finished');
         } catch (e) {
-            logger.error('refresh database failed', e);
+            logger.error({ err: e }, 'Refresh database failed');
             res.status(500).json({ error: 'refresh failed' });
         }
     });
 
     // 全局异常捕获 (Express 5)
     app.use((err, req, res, next) => {
-        logger.error('Server Error: ', err);
+        logger.error({ err }, 'Server error');
         if (!res.headersSent) {
             res.status(500).json({ error: 'Internal server error' });
         }

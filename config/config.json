@@ -37,7 +37,11 @@
     },
     "log": {
         "path": "./logs",
-        "level": 4
+        "level": 4,
+        "console": true,
+        "file": true,
+        "maxFiles": 7,
+        "maxSize": "10M"
     },
     "paths": {
         "html": "./public",

@@ -16,17 +16,17 @@ async function main() {
             await saveToDatabase(mydb, item);
         });
         flush(mydb);
-        logger.info(`finished to scan ${config.paths.images}`);
+        logger.info('Finished scanning: %s', config.paths.images);
         // 启动express服务器
         startWebserver(config, mydb);
     }
     catch (e) {
-        logger.error('Error during scanning and saving to database:', e);
+        logger.error({ err: e }, 'Error during scanning and saving to database');
     }
 }
 await main();
 process.on('uncaughtException', (err) => {
-    logger.error('', err);
+    logger.error({ err }, 'Uncaught exception');
 });
 
 process.on('SIGINT', () => {

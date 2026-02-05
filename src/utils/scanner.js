@@ -18,6 +18,6 @@ export const scanDirectory = async (fullPath, callback) => {
             }
         }
     } catch (e) {
-        logger.error('Error scanning directory:', e);
+        logger.error({ err: e }, 'Error scanning directory');
     }
 };

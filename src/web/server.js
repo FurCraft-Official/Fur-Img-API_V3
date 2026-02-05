@@ -14,7 +14,7 @@ async function startWebserver(config, db) {
             // 创建http服务器
             const httpserver = http.createServer(app);
             httpserver.listen(config.server.httpport, config.server.addr, () => {
-                logger.info(`http listen at http://${config.server.addr}:${config.server.httpport}`);
+                logger.info('HTTP listen at http://%s:%d', config.server.addr, config.server.httpport);
             });
             if (config.server.ssl.enable) {
                 // 创建https服务器
@@ -24,11 +24,11 @@ async function startWebserver(config, db) {
                 };
                 const httpsserver = https.createServer(ssl, app);
                 httpsserver.listen(config.server.httpsport, config.server.addr, () => {
-                    logger.info(`https listen at https://${config.server.addr}:${config.server.httpsport}`);
+                    logger.info('HTTPS listen at https://%s:%d', config.server.addr, config.server.httpsport);
                 });
             }
         } catch (e) {
-            logger.error('failed to start server:', e);
+            logger.error({ err: e }, 'Failed to start server');
             process.exit(1);
         }
     };

@@ -43,12 +43,18 @@ async function initConfig() {
             },
             'log': {
                 'path': './logs',
-                'level': 4
+                'level': 4,
+                'console': true,
+                'file': true,
+                'maxFiles': 7,
+                'maxSize': '10M'
             },
             'paths': {
+                'html': './public',
                 'images': './tupian'
             },
             'admintoken': '114514'
+
         };
         if (!exists) {
             try {
