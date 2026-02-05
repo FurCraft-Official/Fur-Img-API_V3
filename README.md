@@ -67,7 +67,7 @@ npm install
   },
   "log": {
     "path": "./logs",               // 日志目录
-    "level": 3                      // 日志级别（0-5）
+    "level": 3                      // 日志级别（0-3）
   },
   "paths": {
     "html": "./public",             // 静态网站文件目录
