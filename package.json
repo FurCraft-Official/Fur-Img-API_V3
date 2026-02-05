@@ -1,13 +1,12 @@
 {
-  "name": "api",
-  "version": "1.0.0",
+  "name": "Furimg-V3",
+  "version": "3.0.0",
   "main": "app.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "114514-lang",
+  "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
     "better-sqlite3": "^12.6.2",
