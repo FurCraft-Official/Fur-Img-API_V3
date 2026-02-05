@@ -13,8 +13,8 @@ async function startWebserver(config, db) {
         try {
             // 创建http服务器
             const httpserver = http.createServer(app);
-            httpserver.listen(config.server.httpport, config.server.addr, () => {
-                logger.info('HTTP listen at http://%s:%d', config.server.addr, config.server.httpport);
+            httpserver.listen(config.server.http_port, config.server.addr, () => {
+                logger.info('HTTP listen at http://%s:%d', config.server.addr, config.server.http_port);
             });
             if (config.server.ssl.enable) {
                 // 创建https服务器
@@ -23,8 +23,8 @@ async function startWebserver(config, db) {
                     cert: fs.readFileSync(path.resolve(config.server.ssl.cert))
                 };
                 const httpsserver = https.createServer(ssl, app);
-                httpsserver.listen(config.server.httpsport, config.server.addr, () => {
-                    logger.info('HTTPS listen at https://%s:%d', config.server.addr, config.server.httpsport);
+                httpsserver.listen(config.server.https_port, config.server.addr, () => {
+                    logger.info('HTTPS listen at https://%s:%d', config.server.addr, config.server.https_port);
                 });
             }
         } catch (e) {

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import { join } from 'path';
 import dayjs from 'dayjs';
 
-// 强制开启颜色显示，解决 Windows 环境下颜色对不上的问题
+// 强制开启颜色显示,解决 Windows 环境下颜色对不上的问题
 process.env.FORCE_COLOR = '1';
 
 const LOG_LEVELS = {
@@ -64,7 +64,7 @@ class FileStream {
     }
 }
 
-// 检查单个文件大小，超过则重命名归档
+// 检查单个文件大小,超过则重命名归档
 async function checkAndRotateSize(filePath, maxSizeMB) {
     if (!maxSizeMB || maxSizeMB <= 0) return;
     try {
@@ -72,7 +72,7 @@ async function checkAndRotateSize(filePath, maxSizeMB) {
             const stats = await fs.stat(filePath);
             const maxSizeBytes = maxSizeMB * 1024 * 1024;
             if (stats.size > maxSizeBytes) {
-                // 如果文件太大，将其重命名为：app-2026-02-05.172230.bak
+                // 如果文件太大,将其重命名为:app-2026-02-05.172230.bak
                 const archivePath = `${filePath}.${dayjs().format('HHmmss')}.bak`;
                 await fs.move(filePath, archivePath);
             }
@@ -106,6 +106,7 @@ async function rotateOldLogs(logPath, maxFiles) {
 }
 
 let loggerInstance = null;
+let workerTag = ''; // 工作进程标识
 
 export async function initLogger(config = {}) {
     const logLevel = LOG_LEVELS[config.log?.level ?? 4] || 'info';
@@ -114,6 +115,12 @@ export async function initLogger(config = {}) {
     const enableFile = config.log?.file !== false;
     const maxFiles = config.log?.maxFiles || 7;
     const maxSize = config.log?.maxSize || 10; // 默认 10MB
+    const workerId = config.log?.workerId; // 工作进程 ID
+
+    // 设置工作进程标识
+    if (workerId) {
+        workerTag = `[w${workerId}] `;
+    }
 
     await fs.ensureDir(logPath);
 
@@ -123,7 +130,7 @@ export async function initLogger(config = {}) {
         const logFileName = `app-${dayjs().format('YYYY-MM-DD')}.log`;
         const logFile = join(logPath, logFileName);
 
-        // --- 新增：写入前先检查大小 ---
+        // --- 新增:写入前先检查大小 ---
         await checkAndRotateSize(logFile, maxSize);
 
         await fs.ensureFile(logFile);
@@ -141,7 +148,7 @@ export async function initLogger(config = {}) {
                 colorize: true,
                 translateTime: 'yyyy-mm-dd HH:MM:ss',
                 ignore: 'pid,hostname',
-                messageFormat: '{msg}',
+                messageFormat: workerTag + '{msg}', // 在这里添加 worker 标识
                 customColors: 'trace:gray,debug:blue,info:green,warn:yellow,error:red,fatal:bgRed',
                 errorLikeObjectKeys: ['err', 'error']
             })

@@ -1,8 +1,8 @@
 {
     "server": {
         "addr": "localhost",
-        "httpport": 3000,
-        "httpsport": 3001,
+        "http_port": 3000,
+        "https_port": 3001,
         "forcehttps": false,
         "gzip": false,
         "ssl": {
@@ -18,7 +18,7 @@
             "optionsSuccessStatus": 204
         },
         "rateLimit": {
-            "enable": true,
+            "enable": false,
             "windowMS": 15,
             "limit": 100,
             "statusCode": 429,
@@ -30,6 +30,7 @@
             }
         }
     },
+    "workers": 4,
     "db": {
         "sqlite3": {
             "file": "./data/app.db"
@@ -45,7 +46,7 @@
     },
     "paths": {
         "html": "./public",
-        "images": "./tupian"
+        "images": "./img"
     },
     "admintoken": "114514"
 }
