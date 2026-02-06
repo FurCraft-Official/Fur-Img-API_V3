@@ -21,4 +21,4 @@ VOLUME ["/app/img", "/app/ssl", "/app/public"]
 EXPOSE 3000
 
 # 启动应用
-CMD ["node", "index.js"]
+CMD ["node", "app.js"]
