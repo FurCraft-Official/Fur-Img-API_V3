@@ -39,7 +39,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.IMAGE_NAME }}
+          images: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fur-img-api_v3
           tags: |
             type=ref,event=branch
             type=ref,event=tag
