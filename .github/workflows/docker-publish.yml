@@ -1,61 +1,50 @@
-name: Docker Build and Publish
+name: Push to Docker Hub
 
 on:
   push:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main" ]
 
 env:
-  REGISTRY: ghcr.io
-  # 镜像名称转小写（防止用户名为大写导致推送到 ghcr 失败）
-  IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: ""
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/fur-img-api_v3
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 设置 Docker Buildx (支持多架构构建和缓存优化)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 登录到 GitHub 容器注册表 (GHCR)
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into Docker Hub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 自动生成标签 (例如: main, v1.0.0, sha-xxxxxxx)
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
-            type=sha,format=long
+            type=latest
 
-      # 构建并推送镜像
       - name: Build and push Docker image
-        id: build-and-push
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # 缓存优化：大大缩短重复构建的时间
           cache-from: type=gha
           cache-to: type=gha,mode=max
