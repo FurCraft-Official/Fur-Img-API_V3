@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ""
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/fur-img-api_v3
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_EMAIL }}/fur-img-api_v3
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: lowercase repo name
         run: |
           echo "IMAGE_NAME=${GITHUB_REPOSITORY@L}" >> ${GITHUB_ENV}
