@@ -201,12 +201,11 @@ GET /health
 
 **请求：**
 ```http
-POST /admin/refresh
-Authorization: Bearer 114514
+POST /admin/refresh?token=114514
 ```
 
-**请求头：**
-- `Authorization: Bearer <admintoken>` - 管理员 Token
+**查询参数：**
+- `token` - 管理员 Token
 
 **响应示例：**
 ```json
@@ -223,15 +222,14 @@ Authorization: Bearer 114514
 
 **请求：**
 ```http
-POST /admin/unban/:ip
-Authorization: Bearer 114514
+POST /admin/unban/:ip?token=114514
 ```
 
-**参数：**
+**路径参数：**
 - `:ip` - 需要解封的 IP 地址
 
-**请求头：**
-- `Authorization: Bearer <admintoken>` - 管理员 Token
+**查询参数：**
+- `token` - 管理员 Token
 
 **成功响应示例（200）：**
 ```json
