@@ -16,6 +16,8 @@ jobs:
       contents: read
 
     steps:
+      - name: 1
+        run: echo "${#DOCKERHUB_USERNAME} ${#DOCKERHUB_TOKEN}"
       - name: Checkout repository
         uses: actions/checkout@v4
         
