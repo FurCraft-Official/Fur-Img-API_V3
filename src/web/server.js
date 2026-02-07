@@ -5,7 +5,6 @@ import logger from '../utils/loggerInstance.js';
 import fs from 'fs-extra';
 import path from 'path';
 import { createRoute } from './api.js';
-import { db } from '../database/db.js';
 const app = express();
 
 

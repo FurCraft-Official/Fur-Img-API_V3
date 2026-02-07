@@ -68,8 +68,8 @@ async function routerRandomIMG() {
             }
 
             if (req.query.json === 'true') {
-                const formatFileInfo = formatFileInfo(file, config.paths.images);
-                return res.json(formatFileInfo);
+                const FileInfo = formatFileInfo(file, config.paths.images);
+                return res.json(FileInfo);
             }
 
             const filePath = path.resolve(file.path);
