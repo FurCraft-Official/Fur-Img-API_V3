@@ -10,7 +10,7 @@ async function initConfig() {
                 'httpport': 3000,
                 'httpsport': 3001,
                 'forcehttps': false,
-                'gzip': false,
+                'gzip': true,
                 'ssl': {
                     'enable': false,
                     'cert': './ssl/fullchain.pem',

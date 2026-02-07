@@ -4,7 +4,8 @@ import fs from 'fs-extra';
 import path from 'path';
 import { app } from '../server.js';
 import { getRandomFromAll, getRandomFromFolder } from '../../database/db.js';
-import { JSON } from '../middleware.js';
+import { formatFileInfo } from '../middleware.js';
+import mime from 'mime-types';
 
 async function routerRandomIMG() {
     app.get('/api', (req, res) => {
@@ -16,8 +17,8 @@ async function routerRandomIMG() {
             }
 
             if (req.query.json === 'true') {
-                const json = JSON(file, config.paths.images);
-                return res.json(json);
+                const FileInfo = formatFileInfo(file, config.paths.images);
+                return res.json(FileInfo);
             }
 
             const filePath = path.resolve(file.path);
@@ -31,10 +32,11 @@ async function routerRandomIMG() {
             const stat = fs.statSync(filePath);
             const fileSize = stat.size;
 
-            // 设置响应头
+            const mimeType = mime.lookup(file.file) || 'application/octet-stream';
+
             res.setHeader('Content-Length', fileSize);
-            res.setHeader('Content-Type', getMimeType(file.file));
-            res.setHeader('Cache-Control', 'public, max-age=31536000');
+            res.setHeader('Content-Type', mimeType);
+            res.setHeader('Cache-Control', 'public, max-age=60');
 
             // 创建可读流并传输
             const fileStream = fs.createReadStream(filePath);
@@ -66,8 +68,8 @@ async function routerRandomIMG() {
             }
 
             if (req.query.json === 'true') {
-                const json = JSON(file, config.paths.images);
-                return res.json(json);
+                const formatFileInfo = formatFileInfo(file, config.paths.images);
+                return res.json(formatFileInfo);
             }
 
             const filePath = path.resolve(file.path);
@@ -82,9 +84,11 @@ async function routerRandomIMG() {
             const fileSize = stat.size;
 
             // 设置响应头
+            const mimeType = mime.lookup(file.file) || 'application/octet-stream';
+
             res.setHeader('Content-Length', fileSize);
-            res.setHeader('Content-Type', getMimeType(file.file));
-            res.setHeader('Cache-Control', 'public, max-age=31536000');
+            res.setHeader('Content-Type', mimeType);
+            res.setHeader('Cache-Control', 'public, max-age=60');
 
             // 创建可读流并传输
             const fileStream = fs.createReadStream(filePath);
@@ -105,23 +109,6 @@ async function routerRandomIMG() {
             }
         }
     });
-    function getMimeType(filename) {
-        const ext = path.extname(filename).toLowerCase();
-        const mimeTypes = {
-            '.jpg': 'image/jpeg',
-            '.jpeg': 'image/jpeg',
-            '.png': 'image/png',
-            '.gif': 'image/gif',
-            '.webp': 'image/webp',
-            '.svg': 'image/svg+xml',
-            '.mp4': 'video/mp4',
-            '.webm': 'video/webm',
-            '.pdf': 'application/pdf',
-            '.json': 'application/json'
-        };
-        return mimeTypes[ext] || 'application/octet-stream';
-    }
-
 }
 
 export { routerRandomIMG };

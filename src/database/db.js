@@ -3,7 +3,6 @@ import path from 'path';
 import Database from 'better-sqlite3';
 import logger from '../utils/loggerInstance.js';
 import config from '../utils/config.js';
-import e from 'express';
 
 let buffer = [];
 const BATCH_SIZE = 1000;

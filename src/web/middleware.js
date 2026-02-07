@@ -6,7 +6,7 @@ import config from '../utils/config.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 dayjs.extend(customParseFormat);
 
-const JSON = (fileObj, baseScanPath) => {
+const formatFileInfo = (fileObj, baseScanPath) => {
     try {
         const absolutePath = path.resolve(fileObj.path);
         const stats = fs.statSync(absolutePath);
@@ -55,4 +55,4 @@ function authMiddleware(req, res, next) {
 
     return res.status(401).json({ error: 'unauthorized' });
 }
-export { JSON, requestLogger, authMiddleware };
+export { formatFileInfo, requestLogger, authMiddleware };

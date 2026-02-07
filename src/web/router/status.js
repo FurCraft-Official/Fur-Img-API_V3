@@ -12,8 +12,7 @@ async function routerStatus() {
             const memoryUsage = process.memoryUsage();
             const uptime = process.uptime() * 1000; // 转换为毫秒
             const uptimeDuration = dayjs.duration(uptime);
-
-            res.json({
+            const json = {
                 status: 'ok',
                 memory: {
                     rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
@@ -29,7 +28,8 @@ async function routerStatus() {
                     formatted: `${Math.floor(uptimeDuration.asDays())}天 ${uptimeDuration.hours()}时 ${uptimeDuration.minutes()}分 ${uptimeDuration.seconds()}秒`
                 },
                 timestamp: dayjs().format('YYYY-MM-DD HH:mm:ss')
-            });
+            };
+            res.json(json);
         } catch (err) {
             logger.error({ err }, 'Health check error');
             if (!res.headersSent) {
@@ -66,7 +66,6 @@ async function routerStatus() {
                 const urlPath = relative_path.replace(/\\/g, '/');
                 result[folderKey][file] = `/files/${urlPath}`;
             });
-
             res.json(result);
         } catch (e) {
             logger.error({ err: e }, 'Get file list failed');
