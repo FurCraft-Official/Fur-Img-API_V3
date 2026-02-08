@@ -24,19 +24,20 @@ npm install
 ```
 
 项目已预装以下关键依赖：
-- `express` - Web 框架
-- `better-sqlite3` - SQLite3 数据库
-- `pino` - 高性能日志库
-- `pino-http` - HTTP 请求日志中间件
-- `pino-pretty` - 日志格式化
-- `cors` - CORS 中间件
-- `express-rate-limit` - 速率限制中间件
-- `rate-limit-sqlite` - SQLite 持久化速率限制存储
-- `compression` - Gzip 压缩
-- `dayjs` - 日期时间处理
-- `fs-extra` - 增强文件系统操作
-- `chalk` - 终端彩色输出
-- `node-cron` - 定时任务（预留）
+- `express` (^5.2.1) - Web 框架
+- `better-sqlite3` (^12.6.2) - SQLite3 数据库
+- `pino` (^10.3.0) - 高性能日志库
+- `pino-http` (^11.0.0) - HTTP 请求日志中间件
+- `pino-pretty` (^13.1.3) - 日志格式化
+- `cors` (^2.8.6) - CORS 中间件
+- `express-rate-limit` (^8.2.1) - 速率限制中间件
+- `rate-limit-sqlite` (^0.0.2) - SQLite 持久化速率限制存储
+- `compression` (^1.8.1) - Gzip 压缩
+- `dayjs` (^1.11.19) - 日期时间处理
+- `fs-extra` (^11.3.3) - 增强文件系统操作
+- `mime-types` (^3.0.2) - MIME 类型识别
+- `node-cron` (^4.2.1) - 定时任务
+- `rimraf` (^6.1.2) - 跨平台文件删除
 
 ### 配置
 
@@ -111,8 +112,17 @@ npm install
 
 ### 启动服务
 
-**本地开发：**
+**本地开发（使用 ts-node-dev）：**
 ```bash
+npm run dev
+```
+
+**生产环境（编译和运行）：**
+```bash
+# 编译 TypeScript 为 JavaScript
+npm run build
+
+# 运行编译后的应用
 npm start
 ```
 
@@ -417,41 +427,51 @@ GET /files/path/to/file.jpg
 
 ```
 .
-├── app.js                 # 应用入口
-├── package.json           # 项目配置和依赖
+├── app.ts                 # 应用入口（TypeScript）
+├── tsconfig.json          # TypeScript 配置
 ├── eslint.config.mjs      # ESLint 配置
+├── package.json           # 项目配置和依赖
+├── dockerfile             # Docker 镜像配置
+├── dist/                  # 编译后的 JavaScript 文件（npm run build 生成）
 ├── data/
 │   ├── config.json       # 配置文件
 │   └── app.db            # SQLite 数据库文件
 ├── src/
 │   ├── database/
-│   │   └── db.js         # SQLite 数据库操作（增删改查、速率限制）
+│   │   └── db.ts         # SQLite 数据库操作（增删改查、速率限制）
+│   ├── types/
+│   │   └── index.d.ts    # TypeScript 类型定义
 │   ├── utils/
-│   │   ├── config.js     # 配置管理
-│   │   ├── logger.js     # Pino 日志工具（包括日志轮换、格式化）
-│   │   ├── loggerInstance.js  # 日志实例导出
-│   │   └── scanner.js    # 目录扫描工具（递归扫描文件）
+│   │   ├── config.ts     # 配置管理
+│   │   ├── logger.ts     # Pino 日志工具（包括日志轮换、格式化）
+│   │   ├── loggerInstance.ts  # 日志实例导出
+│   │   └── scanner.ts    # 目录扫描工具（递归扫描文件）
 │   └── web/
-│       ├── server.js     # Express 服务器启动和配置
-│       ├── middleware.js # HTTP 中间件（请求日志、认证）
-│       ├── api.js        # 挂载 API 路由
+│       ├── server.ts     # Express 服务器启动和配置
+│       ├── middleware.ts # HTTP 中间件（请求日志、认证）
+│       ├── api.ts        # 挂载 API 路由
 │       └── router/       # 路由模块（模块化方式）
-│           ├── admin.js  # 管理员路由（刷新数据库、解封IP）
-│           ├── status.js # 状态路由（健康检查、文件列表、黑名单）
-│           ├── randomimg.js     # 随机图片路由
-│           ├── staticfiles.js   # 静态文件路由
-│           └── routermiddleware.js  # 路由中间件
+│           ├── admin.ts  # 管理员路由（刷新数据库、解封IP）
+│           ├── status.ts # 状态路由（健康检查、文件列表、黑名单）
+│           ├── randomimg.ts     # 随机图片路由
+│           ├── staticfiles.ts   # 静态文件路由
+│           └── routermiddleware.ts  # 路由中间件
 ├── logs/                 # 日志目录（自动生成）
 │   └── app-YYYY-MM-DD.log   # 日志文件（按日期）
 ├── ssl/                  # SSL 证书目录（可选）
 ├── public/               # 静态网站文件目录
-└── img/               # 图片/文件自定义目录（可配置）
-```
+└── img/                  # 图片/文件自定义目录（可配置）
 
 ## 开发命令
 
 ```bash
-# 启动服务
+# 本地开发（热重载）
+npm run dev
+
+# 编译 TypeScript
+npm run build
+
+# 运行编译后的应用
 npm start
 
 # 代码质量检查
@@ -460,6 +480,11 @@ npm run lint
 # 自动修复代码风格
 npm run lint:fix
 ```
+
+## 环境要求
+
+- Node.js >= 18.18.0
+- npm >= 9.0.0
 
 ## License
 

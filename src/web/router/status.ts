@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration.js';
 import logger from '../../utils/loggerInstance.js';
 import { getAllFilelist, getRateLimits } from '../../database/db.js';
 import config from '../../utils/config.js';
-import { scanObj, banlistObj, fileObj } from '../../types/index.js';
+import { banlistObj, fileObj } from '../../types/index.js';
 dayjs.extend(duration);
 
 
@@ -43,7 +43,7 @@ async function routerStatus() {
         try {
             // 假设 getAllFilelist() 返回的是 SELECT * FROM files 的结果
             const rowsdata = getAllFilelist();
-            const rows = rowsdata as fileObj[]
+            const rows = rowsdata as fileObj[];
             const result: any = {};
 
             rows.forEach(row => {
@@ -78,7 +78,7 @@ async function routerStatus() {
     app.use('/banlist', (req, res) => {
         try {
             const ratelistdata = getRateLimits();
-            const ratelist = ratelistdata as { key: string, totalHits: number, resetTime: number }[]
+            const ratelist = ratelistdata as { key: string, totalHits: number, resetTime: number }[];
             const banlist: Partial<banlistObj> = {};
             for (const items of ratelist) {
                 if (items.totalHits > config.server.rateLimit.limit) {

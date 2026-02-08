@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express';
 import logger from '../utils/loggerInstance.js';
 import dayjs from 'dayjs';
 import config from '../utils/config.js';

@@ -1,24 +1,32 @@
-// eslint.config.js (ESLint 9+ 扁平化配置)
-import js from '@eslint/ts';
+import js from '@eslint/js';
 import globals from 'globals';
+import tseslint from 'typescript-eslint'; // 处理 TS 语法
+import stylistic from '@stylistic/eslint-plugin'; // 处理分号、空格等
 
-export default [
+export default tseslint.config(
     js.configs.recommended,
+    ...tseslint.configs.recommended, // 引入 TS 推荐规则
     {
+        // 1. 明确告诉 ESLint 哪些文件需要应用这些规则
+        files: ['**/*.ts', '**/*.js'],
+        plugins: {
+            '@stylistic': stylistic
+        },
         languageOptions: {
+            parser: tseslint.parser, // 使用 TS 解析器
             ecmaVersion: 'latest',
             sourceType: 'module',
             globals: {
-                ...globals.node,
-                ...globals.es2021
+                ...globals.node
             }
         },
         rules: {
-            // 代码质量
-            'no-unused-vars': ['warn', {
-                argsIgnorePattern: '^_',
-                varsIgnorePattern: '^_'
-            }],
+            // 2. 使用 @stylistic 的分号规则
+            '@stylistic/semi': ['warn', 'always'],
+            '@stylistic/indent': ['warn', 4],
+            '@stylistic/quotes': ['warn', 'single'],
+            'no-unused-vars': 'off',
+            '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_" }],
             'no-undef': 'error',
             'no-console': 'off', // 后端项目允许 console
 
@@ -49,14 +57,12 @@ export default [
             // 错误预防
             'no-await-in-loop': 'warn',
             'require-atomic-updates': 'warn',
-            'no-return-await': 'warn'
-        },
-        ignores: [
-            'node_modules/',
-            'dist/',
-            'build/',
-            '*.db',
-            '*.log'
-        ]
+            'no-return-await': 'warn',
+            '@typescript-eslint/no-explicit-any': 'off',
+        }
+    },
+    {
+        // 4. 忽略编译后的产物
+        ignores: ['dist/**', 'node_modules/**']
     }
-];
+);

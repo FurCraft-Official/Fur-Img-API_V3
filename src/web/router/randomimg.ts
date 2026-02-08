@@ -12,7 +12,7 @@ async function routerRandomIMG() {
     app.get('/api', (req, res) => {
         try {
             const filedata = getRandomFromAll();
-            const file = filedata as fileObj
+            const file = filedata as fileObj;
 
             if (!file) {
                 return res.status(404).json({ error: 'No files found' });
@@ -64,7 +64,7 @@ async function routerRandomIMG() {
         try {
             const urlFolder = req.params.splat.join('/');
             const filedata = getRandomFromFolder(urlFolder);
-            const file = filedata as fileObj
+            const file = filedata as fileObj;
 
             if (!file) {
                 return res.status(404).json({ error: 'No files found in this folder' });
