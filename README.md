@@ -107,7 +107,7 @@ npm install
 > **错误示例：** ❌ `./img/摄影作品/2024年` `./img/photo?test` `./img/my files`
 > 
 > **正确示例：** ✅ `./img/photography/2024` `./img/photo_test` `./img/my-files`
-```
+
 
 ### 启动服务
 
